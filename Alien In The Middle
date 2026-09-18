@@ -1,0 +1,47 @@
+ALGORITMA AlienInTheMiddle
+
+// Asumsi: pesan hanya berisi huruf kapital A-Z. Indeks dimulai dari 1.
+
+// 1. INPUT
+TAMPILKAN "Masukkan pesan: "
+BACA pesan
+
+n ← panjang(pesan)
+alfabet ← "ABCDEFGHIJKLMNOPQRSTUVWXYZ"   // posisi huruf = nilainya (A=1 ... Z=26)
+
+// 2. KONVERSI HURUF KE ANGKA
+//    Cari posisi setiap huruf pesan di dalam alfabet.
+UNTUK i ← 1 SAMPAI n LAKUKAN
+    UNTUK j ← 1 SAMPAI 26 LAKUKAN
+        JIKA pesan[i] = alfabet[j] MAKA
+            angka[i] ← j
+        AKHIR JIKA
+    AKHIR UNTUK
+AKHIR UNTUK
+
+// 3. PROSES ENKRIPSI
+hasil ← ""
+
+// Huruf pertama tidak berubah
+hasil ← hasil + pesan[1]
+
+// Huruf ke-2 dan seterusnya digeser sesuai nilai huruf sebelumnya
+UNTUK i ← 2 SAMPAI n LAKUKAN
+
+    // 3a. Hitung pergeseran: nilai huruf saat ini + nilai huruf sebelumnya
+    nilaiBaru ← angka[i] + angka[i - 1]
+
+    // 3b. Jika melewati 26, kembali mulai dari A (perulangan alfabet)
+    JIKA nilaiBaru > 26 MAKA
+        nilaiBaru ← nilaiBaru - 26
+    AKHIR JIKA
+
+    // 3c. Konversi angka kembali menjadi huruf
+    hasil ← hasil + alfabet[nilaiBaru]
+
+AKHIR UNTUK
+
+// 4. OUTPUT
+TAMPILKAN "Pesan terenkripsi: ", hasil
+
+SELESAI

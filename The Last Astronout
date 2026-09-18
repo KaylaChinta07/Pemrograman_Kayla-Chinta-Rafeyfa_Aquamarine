@@ -1,0 +1,65 @@
+ALGORITMA TheLastAstronaut
+
+// 1. INPUT
+TAMPILKAN "Masukkan jumlah astronot (N): "
+BACA N
+TAMPILKAN "Masukkan nilai awal K: "
+BACA K
+
+// Pastikan K minimal 2
+JIKA K < 2 MAKA
+    K ← 2
+AKHIR JIKA
+
+// 2. PEMBUATAN DAFTAR ASTRONOT
+daftar ← list kosong
+UNTUK i ← 1 SAMPAI N LAKUKAN
+    tambahkan i ke daftar
+AKHIR UNTUK
+
+urutanEliminasi ← list kosong
+posisi ← 0        // indeks awal = astronot nomor 1 (indeks mulai dari 0)
+
+// 3. PROSES ELIMINASI (berulang sampai tersisa 1 astronot)
+SELAMA panjang(daftar) > 1 LAKUKAN
+
+    // 3a. Hitung melingkar: maju (K - 1) langkah dari posisi awal hitungan.
+    //     MOD membuat hitungan kembali ke awal lingkaran jika melewati ujung daftar.
+    posisi ← (posisi + K - 1) MOD panjang(daftar)
+
+    // 3b. Eliminasi astronot pada posisi tersebut
+    dieliminasi ← daftar[posisi]
+    tambahkan dieliminasi ke urutanEliminasi
+    hapus daftar[posisi] dari daftar
+
+    // 3c. Perpindahan posisi: hitungan berikutnya dimulai dari astronot
+    //     tepat setelah yang dieliminasi. Setelah penghapusan, astronot
+    //     berikutnya otomatis menempati indeks "posisi" yang sama.
+    //     Jika indeks melewati akhir daftar, kembali ke awal (lingkaran).
+    JIKA posisi >= panjang(daftar) MAKA
+        posisi ← 0
+    AKHIR JIKA
+
+    // 3d. Ubah nilai K berdasarkan nomor astronot yang dieliminasi
+    JIKA dieliminasi MOD 2 = 0 MAKA      // nomor genap
+        K ← K + 2
+    JIKA TIDAK                            // nomor ganjil
+        K ← K - 1
+    AKHIR JIKA
+
+    // 3e. K tidak boleh kurang dari 2
+    JIKA K < 2 MAKA
+        K ← 2
+    AKHIR JIKA
+
+AKHIR SELAMA
+
+// 4. OUTPUT
+TAMPILKAN "Urutan eliminasi: "
+UNTUK setiap x DALAM urutanEliminasi LAKUKAN
+    TAMPILKAN x
+AKHIR UNTUK
+
+TAMPILKAN "Astronot terakhir: ", daftar[0]
+
+SELESAI
